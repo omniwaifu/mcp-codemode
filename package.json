@@ -1,0 +1,21 @@
+{
+  "name": "mcp-codemode",
+  "version": "1.0.0",
+  "description": "Convert MCP tools to TypeScript APIs for LLMs - based on Cloudflare's approach",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test/test-spotify.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  },
+  "keywords": [
+    "mcp",
+    "llm",
+    "typescript",
+    "code-generation",
+    "sandbox",
+    "cloudflare"
+  ],
+  "license": "MIT"
+}
