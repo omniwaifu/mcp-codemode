@@ -7,7 +7,8 @@
     "test": "node test/test-spotify.js"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.0.0"
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "isolated-vm": "^6.0.1"
   },
   "keywords": [
     "mcp",

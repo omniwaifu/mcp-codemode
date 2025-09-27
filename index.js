@@ -7,11 +7,28 @@
 
 const { MCPBridge } = require('./src/mcp-bridge.js');
 const { CodeSandbox } = require('./src/sandbox.js');
+const { IsolatedSandbox } = require('./src/isolated-sandbox.js');
 
 class MCPCodeMode {
-  constructor(serverConfig) {
+  constructor(serverConfig, options = {}) {
     this.bridge = new MCPBridge(serverConfig);
-    this.sandbox = new CodeSandbox();
+
+    // Choose sandbox implementation
+    // Default to isolated-vm for better security
+    const sandboxType = options.sandbox || 'isolated';
+
+    if (sandboxType === 'isolated') {
+      this.sandbox = new IsolatedSandbox({
+        memoryLimit: options.memoryLimit || 128,
+        timeout: options.timeout || 5000
+      });
+    } else if (sandboxType === 'worker') {
+      this.sandbox = new CodeSandbox();
+    } else {
+      throw new Error(`Unknown sandbox type: ${sandboxType}. Use 'isolated' or 'worker'`);
+    }
+
+    this.sandboxType = sandboxType;
     this.connected = false;
   }
 
@@ -28,6 +45,12 @@ class MCPCodeMode {
    */
   async disconnect() {
     await this.bridge.disconnect();
+
+    // Dispose of isolated sandbox if used
+    if (this.sandboxType === 'isolated' && this.sandbox.dispose) {
+      await this.sandbox.dispose();
+    }
+
     this.connected = false;
   }
 
@@ -89,5 +112,6 @@ ${types}
 module.exports = {
   MCPCodeMode,
   MCPBridge,
-  CodeSandbox
+  CodeSandbox,
+  IsolatedSandbox
 };
