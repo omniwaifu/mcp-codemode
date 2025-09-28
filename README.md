@@ -2,7 +2,7 @@
 
 Convert any MCP (Model Context Protocol) server into TypeScript APIs that LLMs can write code against.
 
-Based on Cloudflare's insight: **LLMs write better code than they write tool-calling JSON.**
+Based on [Cloudflare's Code Mode](https://blog.cloudflare.com/code-mode/): **LLMs write better code than they write tool-calling JSON.**
 
 ## Requirements
 
