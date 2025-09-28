@@ -138,4 +138,4 @@ class MCPBridge {
   }
 }
 
-module.exports = { MCPBridge };
+module.exports = MCPBridge;

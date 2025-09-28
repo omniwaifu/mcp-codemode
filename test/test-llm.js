@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 /**
- * MCP Code Mode - Real LLM Integration Test
+ * MCP Code Mode - LLM Integration Test
  *
- * This demonstrates ACTUAL LLM integration where a real LLM API
+ * This demonstrates LLM integration where a real LLM API
  * generates code based on the TypeScript definitions.
  *
  * Supports multiple LLM providers via environment variables.
  */
 
-const { MCPCodeMode } = require('../index.js');
+const MCPCodeMode = require('../index.js');
 const path = require('path');
 const https = require('https');
 
@@ -63,14 +63,15 @@ async function callLLM(prompt, apiKey, apiEndpoint = 'https://api.openai.com', m
             json.content[0].text :
             json.choices[0].message.content;
 
-          // Extract code from response (remove markdown if present)
-          const code = content
-            .replace(/```javascript\n?/g, '')
-            .replace(/```js\n?/g, '')
-            .replace(/```\n?/g, '')
-            .trim();
-
-          resolve(code);
+          // Extract code from markdown blocks if present
+          const codeBlockMatch = content.match(/```(?:javascript|js|typescript|ts)?\n?([\s\S]*?)\n?```/);
+          if (codeBlockMatch) {
+            // Found a code block, extract just the code
+            resolve(codeBlockMatch[1].trim());
+          } else {
+            // No code block found, assume the entire response is code
+            resolve(content.trim());
+          }
         } catch (e) {
           reject(new Error(`Failed to parse API response: ${e.message}`));
         }
@@ -117,6 +118,8 @@ async function runTest() {
     env: {
       PYTHONPATH: path.resolve(__dirname, '../../spotify-plus-mcp')
     }
+  }, {
+    validateTypes: true  // Enable TypeScript validation
   });
 
   try {
@@ -187,6 +190,9 @@ Important:
           result.output.forEach(line => console.log('  ', line));
         } else {
           console.log('❌ Execution error:', result.error);
+        if (result.validationErrors) {
+          console.log('Validation errors:', result.validationErrors);
+        }
         }
 
         console.log('-' .repeat(40) + '\n');

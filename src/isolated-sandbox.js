@@ -197,4 +197,4 @@ class IsolatedSandbox {
   }
 }
 
-module.exports = { IsolatedSandbox };
+module.exports = IsolatedSandbox;

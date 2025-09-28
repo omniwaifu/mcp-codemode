@@ -2,7 +2,7 @@
  * Test the isolated-vm sandbox implementation
  */
 
-const { IsolatedSandbox } = require('../src/isolated-sandbox.js');
+const IsolatedSandbox = require('../src/isolated-sandbox.js');
 
 async function testBasicExecution() {
   console.log('Testing basic code execution...');

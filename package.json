@@ -8,7 +8,9 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.0",
-    "isolated-vm": "^6.0.1"
+    "@types/node": "^24.5.2",
+    "isolated-vm": "^6.0.1",
+    "typescript": "^5.9.2"
   },
   "keywords": [
     "mcp",
