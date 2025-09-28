@@ -76,14 +76,6 @@ const response = await ollama.generate({
 const code = MCPCodeMode.extractCode(response.response);
 ```
 
-## Features
-
-- ✅ **Universal** - Works with ANY MCP server
-- ✅ **Secure** - Runs code in isolated V8 sandbox
-- ✅ **Type-Safe** - Optional TypeScript validation
-- ✅ **Production-Ready** - Error mapping, memory limits, timeouts
-- ✅ **LLM-Agnostic** - Bring your own LLM
-
 ## How It Works
 
 1. Connects to any MCP server and discovers available tools
